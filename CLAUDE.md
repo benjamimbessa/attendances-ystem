@@ -18,7 +18,7 @@ src/Attendance.Api/
   Features/<Name>/   endpoints, request/response DTOs, handlers per feature
   Data/              DbContext, EF configurations, migrations
   Program.cs
-tests/Attendance.Api.Tests/
+tests/Attendance.Tests/
 ```
 
 ## Commands
