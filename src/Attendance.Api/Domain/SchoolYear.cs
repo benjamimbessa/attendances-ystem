@@ -8,6 +8,17 @@ public readonly record struct SchoolYear(int StartYear)
     public static SchoolYear For(DateOnly date) =>
         new(date.Month >= StartMonth ? date.Year : date.Year - 1);
 
+    public static bool TryParse(string? text, out SchoolYear year)
+    {
+        year = default;
+        var parts = text?.Split('-');
+        if (parts is not [var a, var b] || !int.TryParse(a, out var start) || !int.TryParse(b, out var end)
+            || end != start + 1 || start is < 1900 or > 9998)
+            return false;
+        year = new SchoolYear(start);
+        return true;
+    }
+
     public DateOnly Start => new(StartYear, StartMonth, 1);
 
     public DateOnly End => Start.AddYears(1).AddDays(-1);
