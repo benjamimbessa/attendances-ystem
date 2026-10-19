@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="md2html">
+<meta name="md2html-template" content="1">
+<meta name="md2html-source-sha256" content="8ca2fe113c9d479a3666a0181512cb13d2d98b6e989a65d2464f5547b6a1a50a">
+<title>Legacy Attendance Module — Analysis</title>
+<style>
+:root{--bg:#f6f8f7;--surface:#ffffff;--text:#1d2420;--muted:#5b6660;--border:#dfe5e1;--accent:#12663d;
+--accent-soft:#e6f2ec;--code-bg:#f0f3f1;--link:#0f6a3f;--mark:#fff3bf;--shadow:0 1px 3px rgba(0,0,0,.06)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#111714;--surface:#171f1b;--text:#e3e9e5;
+--muted:#9aa7a0;--border:#2a352f;--accent:#3fb37a;--accent-soft:#1c2b23;--code-bg:#1f2924;--link:#6fd3a0;--mark:#4a4220;
+--shadow:none}}
+:root[data-theme="dark"]{--bg:#111714;--surface:#171f1b;--text:#e3e9e5;--muted:#9aa7a0;--border:#2a352f;--accent:#3fb37a;
+--accent-soft:#1c2b23;--code-bg:#1f2924;--link:#6fd3a0;--mark:#4a4220;--shadow:none}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif}
+.topbar{background:var(--surface);border-bottom:3px solid var(--accent);box-shadow:var(--shadow)}
+.topbar-inner{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;gap:16px;align-items:center;justify-content:space-between}
+.crumb{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.crumb strong{color:var(--text);font-weight:600}
+.meta{color:var(--muted);font-size:12px;white-space:nowrap}
+.meta a{color:var(--muted)}
+.theme-toggle{border:1px solid var(--border);background:transparent;color:var(--text);border-radius:6px;padding:4px 10px;cursor:pointer;font:inherit;font-size:12px;margin-left:10px}
+.layout{max-width:1240px;margin:0 auto;padding:28px 24px 64px;display:grid;gap:32px}
+.layout.with-toc{grid-template-columns:260px minmax(0,1fr)}
+.layout.no-toc{grid-template-columns:minmax(0,1fr)}
+.toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;font-size:14px}
+.toc summary{font-weight:600;cursor:pointer;color:var(--accent);margin-bottom:8px;text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--border)}
+.toc li a{display:block;padding:4px 0 4px 12px;color:var(--muted);text-decoration:none;border-left:2px solid transparent;margin-left:-2px;line-height:1.35}
+.toc li.l3 a{padding-left:26px;font-size:13px}
+.toc li a:hover,.toc li a.active{color:var(--accent);border-left-color:var(--accent)}
+article{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:40px 48px;box-shadow:var(--shadow);min-width:0;max-width:920px;overflow-wrap:break-word}
+.layout.no-toc article{margin:0 auto;width:100%}
+article>:first-child{margin-top:0}
+h1,h2,h3,h4,h5,h6{line-height:1.3;margin:1.8em 0 .6em;scroll-margin-top:16px}
+h1{font-size:2em;color:var(--accent);margin-top:0}
+h2{font-size:1.45em;padding-bottom:.3em;border-bottom:1px solid var(--border)}
+h3{font-size:1.2em}
+h4{font-size:1.05em}
+p,ul,ol,dl,blockquote,pre,.table-wrap{margin:0 0 1em}
+a{color:var(--link);text-underline-offset:2px}
+ul,ol{padding-left:1.6em}
+li+li{margin-top:.25em}
+li.task{list-style:none;margin-left:-1.3em}
+li.task input{margin-right:.4em;accent-color:var(--accent)}
+blockquote{margin-left:0;padding:.6em 1em;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 6px 6px 0;color:var(--text)}
+blockquote>:last-child{margin-bottom:0}
+code{font-family:"Cascadia Code",Consolas,"SFMono-Regular",Menlo,monospace;font-size:.88em;background:var(--code-bg);padding:.12em .38em;border-radius:4px}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow:auto;line-height:1.5}
+pre code{background:none;padding:0;font-size:.85em}
+pre.mermaid{background:var(--surface);text-align:center}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:.93em}
+th,td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:600}
+tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--code-bg) 45%,transparent)}
+hr{border:0;border-top:1px solid var(--border);margin:2em 0}
+img{max-width:100%;height:auto}
+mark{background:var(--mark);color:inherit}
+details{margin-bottom:1em}
+.front-matter{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;font-size:.9em;background:var(--accent-soft);border-radius:8px;padding:12px 16px}
+.front-matter dt{font-weight:600}
+.front-matter dd{margin:0}
+.footer{max-width:1240px;margin:0 auto;padding:0 24px 32px;color:var(--muted);font-size:12px}
+@media (max-width:960px){.layout.with-toc{grid-template-columns:minmax(0,1fr)}.toc{position:static;max-height:none}
+.toc details:not([open]) summary{margin-bottom:0}article{padding:28px 24px}}
+@media (max-width:600px){.topbar-inner{flex-direction:column;align-items:flex-start;padding:12px 16px}.meta{white-space:normal}
+.layout{padding:16px 16px 48px}article{padding:20px 16px;border-radius:8px}h1{font-size:1.6em}}
+@media print{.topbar,.toc,.theme-toggle,.footer{display:none}.layout{display:block;padding:0}article{border:0;box-shadow:none;padding:0;max-width:none}
+body{background:#fff;color:#000}a{color:#000}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+<div class="crumb">AttendanceSystem / docs / <strong>legacy-analysis.md</strong></div>
+<div class="meta">Gerado de <a href="legacy-analysis.md">legacy-analysis.md</a> em 2026-10-19 09:35<button class="theme-toggle" type="button">Tema escuro</button></div>
+</div></header>
+<div class="layout with-toc">
+<nav class="toc" aria-label="Sumário"><details open><summary>Sumário</summary><ol><li class="l2"><a href="#1-end-to-end-behavior-business-rules">1. End-to-end behavior (business rules)</a></li>
+<li class="l2"><a href="#2-data-model-and-derived-data">2. Data model and derived data</a></li>
+<li class="l2"><a href="#3-defects-and-risks">3. Defects and risks</a></li>
+<li class="l2"><a href="#4-referenced-but-not-provided">4. Referenced but not provided</a></li>
+<li class="l2"><a href="#5-decisions-for-the-product-owner">5. Decisions for the product owner</a></li></ol></details></nav>
+<article>
+
+<h1 id="legacy-attendance-module--analysis">Legacy Attendance Module — Analysis</h1>
+<p>Sources: <code>legacy/Forms/frmDailyAttendance.frm</code> (FRM), <code>legacy/Database/schema.sql</code> (SCH), <code>sp_SaveDailyAttendance.sql</code> (SAVE), <code>sp_GetStudentAttendance.sql</code> (GET). Citations are <code>file:line</code>. <em>Guess</em> marks inference not proven by the code.</p>
+<h2 id="1-end-to-end-behavior-business-rules">1. End-to-end behavior (business rules)</h2>
+<p><strong>UI (FRM).</strong> User picks a school (active schools, FRM:47); the grade list and the student grid load (FRM:54-58). The attendance date is always today (FRM:40); there is no date picker. The grid shows Student ID, names, Code, Min Late, Notes. A student with no record shows code <code>P</code> and 0 minutes (FRM:90-91). <em>Guess:</em> <code>P</code> means Present.
+<strong>Write path.</strong> Save sends every grid row as XML. A blank code becomes <code>P</code> (FRM:109), and non-numeric minutes become 0 via <code>Val</code> (FRM:112). For each student, SAVE:</p>
+<ul>
+<li>Looks up IsAbsent/IsExcused from <code>AttendanceCodes</code>. An unknown code is stored as present and not excused (SAVE:46-53).</li>
+<li>Upserts one row per student per date. An update does not change TermID (SAVE:54-77).</li>
+<li>Sets TermID from <code>SchoolTerms</code> by date range. It is NULL if no term matches (SAVE:36-39).</li>
+<li>Recounts the year's absences into <code>StudentAttendanceSummary</code> (SAVE:79-96). Excused absences are counted too: the filter is only <code>IsAbsent = 1</code>.</li>
+<li>Raises a <code>CHRONIC_ABSENCE</code> alert when absences ≥ the school threshold (default 10), unless an open alert already exists for that year (SAVE:97-115).</li>
+</ul>
+<p>After the loop, one row is written to <code>AttendanceSubmissionLog</code> (SAVE:120). Audit user = <code>SYSTEM_USER</code>, the SQL login, not the end user.
+<strong>School year.</strong> It starts Sept 1 and is labelled <code>YYYY-YYYY</code>. This is hard-coded in 3 places (SAVE:32, GET:10, GET:30).
+<strong>Read path (GET).</strong> Given a student and a year (default: current), GET returns 2 result sets. Set 1 is the daily rows, newest first, with code description and term name. Set 2 is the summary total plus <code>IsChronicallyAbsent</code>, computed live against the threshold (GET:40). The form never calls GET; the caller is unknown.
+<strong>Print.</strong> The Print button prints a Crystal report for the selected school and today's date (FRM:123-131). It prints saved data, not unsaved grid edits.</p>
+<h2 id="2-data-model-and-derived-data">2. Data model and derived data</h2>
+<ul>
+<li><code>Students</code>, <code>AttendanceCodes</code> (CodeValue unique; IsAbsent/IsExcused/IsActive flags).</li>
+<li><code>StudentAttendance</code>: one logical row per student+date. IsAbsent/IsExcused are copied from the code when the row is saved, so they are not looked up when read.</li>
+<li><code>StudentAttendanceSummary</code>: TotalAbsences per (StudentID, SchoolYear), with a unique key (SCH:45). SchoolID is stored but is not part of the key.</li>
+<li><code>StudentAlerts</code>: open while ResolvedDate is NULL.</li>
+<li>There are no foreign keys or indexes, and no unique key on (StudentID, AttendDate) (SCH:21-36).</li>
+</ul>
+<p><strong>When derived data changes:</strong> summary and alerts update only inside SAVE, and only for students in that submission. Alerts are only ever inserted. Nothing in scope resolves an alert, updates its message, or removes it when absences later drop. Any other write to <code>StudentAttendance</code> leaves the summary stale.</p>
+<h2 id="3-defects-and-risks">3. Defects and risks</h2>
+<ol>
+<li><strong>Wrong row overwritten.</strong> <code>@ExistingID</code> is never reset inside the cursor (SAVE:54). Once one student has an existing row, each later student with no row UPDATEs that earlier row instead of inserting a new one. This silently corrupts data.</li>
+<li><strong>Absence flags leak between students.</strong> <code>@IsAbsent</code>/<code>@IsExcused</code> are not reset (SAVE:46). For an unknown code, the <code>IS NULL</code> fallback (SAVE:49) works only for the first student; later students inherit the previous student's flags.</li>
+<li><strong>Summary recount is broken.</strong> <code>SchoolYear(@AttendDate)</code> (SAVE:83) is an unqualified, undefined UDF, so SQL Server raises &quot;not a recognized built-in function&quot; when it runs. Even if it existed, the recount uses the parameter instead of the column, so it would count absences across all years.</li>
+<li><strong>SQL injection / broken input.</strong> The grade text (FRM:72) and the whole XML (FRM:116) are concatenated into SQL. A <code>'</code> in Notes breaks the call or injects SQL; a <code>&quot;</code>, <code>&lt;</code> or <code>&amp;</code> in Notes breaks the XML.</li>
+<li><strong>No transaction or TRY/CATCH</strong> in SAVE. A mid-batch failure leaves a partial save while the form reports an error, or the user retries the whole batch.</li>
+<li><strong>Unknown or inactive codes are accepted</strong> (SAVE:46; IsActive is never checked). These rows then disappear on read because of <code>INNER JOIN AttendanceCodes</code> (GET:27).</li>
+<li><strong>Missing <code>Schools</code> row means a NULL threshold</strong> (SAVE:98: ISNULL does not apply when no row is returned), so no alert is raised. GET still shows the default of 10. The two disagree.</li>
+<li><strong>No unique key on (StudentID, AttendDate)</strong>, so concurrent saves can create duplicates. Last write wins for the whole grid.</li>
+<li><strong>Grade filter is ineffective.</strong> There is no <code>cboGrade_Click</code>, and <code>LoadStudents</code> runs right after <code>cboGrade.Clear</code> (FRM:56-60), so the grade passed is always <code>''</code>.</li>
+<li>The connection string uses <code>Data Source=&lt;path&gt;\config.ini</code> (FRM:38). That is not a valid SQLOLEDB server, so the real configuration mechanism is unknown.</li>
+<li><strong>Crashes and unguarded input.</strong> <code>cmdPrint_Click</code> has no error handler, and Save/Print run with SchoolID 0 if no school is selected (FRM:101, 123).</li>
+<li><strong>Text truncation.</strong> <code>NVARCHAR</code> XML is cast to <code>VARCHAR(500)</code> notes (SAVE:29), so non-Latin characters are lost.</li>
+<li><strong>Misleading alert text.</strong> The alert message freezes the count at creation time. <code>IsChronicallyAbsent</code> (GET:40) and <code>StudentAlerts</code> are two sources of truth.</li>
+<li><strong>Weak audit trail.</strong> <code>SYSTEM_USER</code> is the database login, so there is no real audit of who saved. <em>Guess:</em> the app uses a shared login.</li>
+</ol>
+<h2 id="4-referenced-but-not-provided">4. Referenced but not provided</h2>
+<ul>
+<li>Tables: <code>Schools</code> (SchoolName, Active, AbsenceAlertThreshold), <code>SchoolTerms</code> (TermID, SchoolID, StartDate, EndDate, TermName), <code>AttendanceSubmissionLog</code>.</li>
+<li>Function <code>SchoolYear()</code>; proc <code>sp_GetStudentsForAttendance</code> (its columns and grade/date semantics).</li>
+<li>VB helper <code>Nz</code> (not built into VB6); <code>config.ini</code>; <code>Reports\DailyAttendance.rpt</code> and its <code>Attendance</code> table/view; Crystal runtime; ADODB.</li>
+<li><code>AttendanceCodes</code> seed data, including whether <code>P</code> exists. The grid-editing code (MSFlexGrid is not editable by itself).</li>
+<li>Whatever resolves alerts, consumes alerts, or calls GET.</li>
+</ul>
+<h2 id="5-decisions-for-the-product-owner">5. Decisions for the product owner</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Topic</th>
+<th>Legacy behavior</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Excused absences toward chronic threshold</td>
+<td>Counted (IsAbsent only)</td>
+<td>Decide explicitly; store and report excused and unexcused counts separately either way</td>
+</tr>
+<tr>
+<td>2</td>
+<td>School-year boundary</td>
+<td>Hard-coded Sept 1</td>
+<td>Drive from a per-school calendar</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Unknown/inactive code</td>
+<td>Saved as present, hidden on read</td>
+<td>Reject with a validation error</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Unmarked student</td>
+<td>Defaults to <code>P</code> on save</td>
+<td>Require explicit marks, or confirm <code>P</code> as an intended default</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Attendance date</td>
+<td>UI: today only; DB: any date</td>
+<td>Allow past dates (with audit); reject future dates</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Alert lifecycle</td>
+<td>Never auto-resolved; new alert after manual resolve</td>
+<td>Define who resolves and whether dropping below threshold closes it</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Threshold</td>
+<td>Absolute count, default 10</td>
+<td>Confirm count vs. rate; make the default configurable</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Concurrent edits</td>
+<td>Last write wins, whole grid</td>
+<td>Optimistic concurrency per record</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Student transfers</td>
+<td>Summary per student+year, filtered by school on recount</td>
+<td>Decide per-school vs. per-student yearly totals</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Tardiness</td>
+<td>Minutes stored, no rules</td>
+<td>Confirm whether tardies accumulate or alert</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Audit identity</td>
+<td>DB login</td>
+<td>Record the authenticated app user</td>
+</tr>
+</tbody>
+</table></div>
+
+</article>
+</div>
+<footer class="footer">Versão HTML gerada automaticamente a partir do Markdown. Para alterar, edite o arquivo .md.</footer>
+<script>
+(function(){var root=document.documentElement,key='md2html-theme';
+try{var saved=localStorage.getItem(key);if(saved)root.dataset.theme=saved;}catch(e){}
+var btn=document.querySelector('.theme-toggle');
+function dark(){return root.dataset.theme==='dark'||(!root.dataset.theme&&matchMedia('(prefers-color-scheme: dark)').matches);}
+function label(){if(btn)btn.textContent=dark()?'Tema claro':'Tema escuro';}
+label();
+if(btn)btn.addEventListener('click',function(){root.dataset.theme=dark()?'light':'dark';
+try{localStorage.setItem(key,root.dataset.theme);}catch(e){}label();});
+var links=[].slice.call(document.querySelectorAll('.toc a'));
+if(links.length&&'IntersectionObserver' in window){var map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){
+links.forEach(function(a){a.classList.remove('active');});var a=map[e.target.id];if(a)a.classList.add('active');}});},
+{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el);});}
+if(matchMedia('(max-width:960px)').matches){var d=document.querySelector('.toc details');if(d)d.removeAttribute('open');}
+})();
+</script>
+
+</body>
+</html>
