@@ -1,0 +1,51 @@
+@host = http://localhost:5156
+@date = 2026-10-19
+
+### Save the day for students 1-3 (204)
+PUT {{host}}/schools/1/attendance/{{date}}
+Content-Type: application/json
+
+[
+  { "studentId": 1, "code": "P",  "minutesLate": 0,  "notes": null },
+  { "studentId": 2, "code": "A",  "minutesLate": 0,  "notes": "sick" },
+  { "studentId": 3, "code": "T",  "minutesLate": 10, "notes": "bus" }
+]
+
+### Re-save the same day: updates, no duplicates (204)
+PUT {{host}}/schools/1/attendance/{{date}}
+Content-Type: application/json
+
+[ { "studentId": 2, "code": "AE", "minutesLate": 0, "notes": "doctor note" } ]
+
+### Student history, current school year
+GET {{host}}/students/2/attendance
+
+### Student history, explicit school year
+GET {{host}}/students/2/attendance?schoolYear=2025-2026
+
+### Chronic absenteeism, current school year
+GET {{host}}/students/2/chronic-absenteeism
+
+### Unknown code: whole batch rejected (400 ProblemDetails)
+PUT {{host}}/schools/1/attendance/{{date}}
+Content-Type: application/json
+
+[ { "studentId": 1, "code": "ZZ", "minutesLate": 0 } ]
+
+### Inactive code X (400)
+PUT {{host}}/schools/1/attendance/{{date}}
+Content-Type: application/json
+
+[ { "studentId": 1, "code": "X", "minutesLate": 0 } ]
+
+### Inactive student 4 (400)
+PUT {{host}}/schools/1/attendance/{{date}}
+Content-Type: application/json
+
+[ { "studentId": 4, "code": "P", "minutesLate": 0 } ]
+
+### Future date (400)
+PUT {{host}}/schools/1/attendance/2099-01-01
+Content-Type: application/json
+
+[ { "studentId": 1, "code": "P", "minutesLate": 0 } ]
